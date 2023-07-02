@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MainToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/blue</item>
+        <item name="titleCentered">true</item>
+
+    </style>
+
+
+</resources>
