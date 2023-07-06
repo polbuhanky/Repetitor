@@ -11,7 +11,19 @@
         <item name="colorOnSecondary">@color/background_color</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
 
+    </style>
+    <style name="ShapeAppearanceOverlay.MaterialCardView.Cut" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">2dp</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeBottomRight">2dp</item>
+        <item name="cornerSizeBottomLeft">2dp</item>
+    </style>
+    <style name="CorneredCardView" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.Cut
+        </item>
     </style>
 </resources>

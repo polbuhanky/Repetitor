@@ -17,7 +17,7 @@
         android:gravity="center"
         android:maxWidth="400dp"
         android:text="Регистрация "
-        android:textColor="@color/white"
+        android:textColor="@color/light_text"
         android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="E-mail"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColor="@color/light_text"
+            android:textColorHint="@color/light_text" />
 
         <EditText
             android:id="@+id/et_email"
@@ -53,8 +53,8 @@
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColor="@color/light_text"
+            android:textColorHint="@color/light_text" />
     </LinearLayout>
 
     <LinearLayout
@@ -74,8 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Password"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColor="@color/light_text"
+            android:textColorHint="@color/light_text" />
 
         <EditText
             android:id="@+id/et_password"
@@ -88,8 +88,8 @@
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColor="@color/light_text"
+            android:textColorHint="@color/light_text" />
     </LinearLayout>
 
     <LinearLayout
@@ -109,8 +109,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Repeat password"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColor="@color/light_text"
+            android:textColorHint="@color/light_text" />
 
         <EditText
             android:id="@+id/et_repeat_password"
@@ -123,19 +123,19 @@
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColor="@color/light_text"
+            android:textColorHint="@color/light_text" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btnReg"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
         android:text="Зарегистрироваться"
-        android:textColor="@color/white"
+        android:textColor="@color/light_text"
         android:background="@drawable/button"
         android:textAllCaps="false"
         android:textSize="24sp"
@@ -153,8 +153,8 @@
         android:layout_marginBottom="60dp"
         android:text="Войти"
         android:textSize="16sp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/light_text"
+        android:textColorHint="@color/light_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -165,8 +165,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="Есть аккаунт?"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/light_text"
+        android:textColorHint="@color/light_text"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_sign_in"
         app:layout_constraintEnd_toEndOf="parent"

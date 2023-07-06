@@ -19,6 +19,13 @@ android {
             useSupportLibrary true
         }
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0"
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
     buildTypes {
         release {
@@ -70,6 +77,8 @@ dependencies {
 
     // define a BOM and its version
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+    implementation 'io.appwrite:sdk-for-android:1.2.0'
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")

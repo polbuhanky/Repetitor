@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.platovco.repetitor.managers.AppwriteClient;
 import org.jetbrains.annotations.NotNull;
 
 import io.appwrite.Client;
+import io.appwrite.exceptions.AppwriteException;
 import io.appwrite.services.Account;
 import kotlin.Result;
 import kotlin.coroutines.Continuation;
@@ -25,7 +27,7 @@ import kotlin.coroutines.EmptyCoroutineContext;
 public class AuthActivity extends AppCompatActivity {
 
     Button btnSignIn;
-    TextView tvRegistration;
+    LinearLayout llRegistration;
     private EditText etMail;
     private EditText etPassword;
     private TextView tvForgetPassword;
@@ -37,15 +39,15 @@ public class AuthActivity extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         btnSignIn = findViewById(R.id.btnSignIn);
         etMail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
-        tvRegistration = findViewById(R.id.tv_reg);
+        llRegistration = findViewById(R.id.ll_reg);
         initListeners();
     }
 
-    private void initListeners(){
+    private void initListeners() {
         btnSignIn.setOnClickListener(view -> {
             if (etMail.getText().toString().equals("")) {
                 Toast.makeText(getApplicationContext(), "Введите почту", Toast.LENGTH_SHORT).show();
@@ -70,29 +72,26 @@ public class AuthActivity extends AppCompatActivity {
                         }
                         @Override
                         public void resumeWith(@NotNull Object o) {
-                            String json = "";
-                            try {
-                                if (o instanceof Result.Failure) {
-                                    Log.i("AAA", "не прошло");
-                                } else {
-                                    Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    Log.i("AAA", "прошло");
-                                }
-                            } catch (Throwable th) {
-                                Log.e("ERROR", th.toString());
-                                Log.i("AAA", "Не прошлоооо");
+                            if (o instanceof Result.Failure) {
+                                // Log.e("AppwriteError", ((AppwriteException) ((Result.Failure) o).exception).getType());
+                            } else {
+                                Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                Log.i("AAA", "прошло");
                             }
                         }
-            });
+                    });
         });
 
-        tvRegistration.setOnClickListener(view -> {
+        llRegistration.setOnClickListener(view ->
+
+        {
             Intent intent = new Intent(AuthActivity.this, RegistrationActivity.class);
             startActivity(intent);
         });
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 }
