@@ -40,7 +40,7 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void init() {
-        btnSignIn = findViewById(R.id.btnSignIn);
+        btnSignIn = findViewById(R.id.singInBTN);
         etMail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
         llRegistration = findViewById(R.id.ll_reg);
@@ -48,6 +48,11 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void initListeners() {
+        llRegistration.setOnClickListener(view ->
+        {
+            Intent intent = new Intent(AuthActivity.this, RegistrationActivity.class);
+            startActivity(intent);
+        });
         btnSignIn.setOnClickListener(view -> {
             if (etMail.getText().toString().equals("")) {
                 Toast.makeText(getApplicationContext(), "Введите почту", Toast.LENGTH_SHORT).show();
@@ -70,10 +75,11 @@ public class AuthActivity extends AppCompatActivity {
                         public CoroutineContext getContext() {
                             return EmptyCoroutineContext.INSTANCE;
                         }
+
                         @Override
                         public void resumeWith(@NotNull Object o) {
                             if (o instanceof Result.Failure) {
-                                // Log.e("AppwriteError", ((AppwriteException) ((Result.Failure) o).exception).getType());
+                                Log.e("AppwriteError", ((Result.Failure) o).exception.toString());
                             } else {
                                 Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                                 startActivity(intent);
@@ -83,12 +89,7 @@ public class AuthActivity extends AppCompatActivity {
                     });
         });
 
-        llRegistration.setOnClickListener(view ->
 
-        {
-            Intent intent = new Intent(AuthActivity.this, RegistrationActivity.class);
-            startActivity(intent);
-        });
     }
 
     @Override

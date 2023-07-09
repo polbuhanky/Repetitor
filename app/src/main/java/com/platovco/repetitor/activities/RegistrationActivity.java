@@ -1,6 +1,7 @@
 package com.platovco.repetitor.activities;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,10 +17,13 @@ import com.platovco.repetitor.R;
 import com.platovco.repetitor.managers.AppwriteClient;
 
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Map;
 import java.util.UUID;
+
 import io.appwrite.Client;
 import io.appwrite.exceptions.AppwriteException;
+import io.appwrite.models.Session;
 import io.appwrite.models.User;
 import kotlin.Result;
 import kotlin.coroutines.Continuation;
@@ -32,9 +37,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText etEmail;
     private EditText etPassword;
     private EditText etPassword2;
-    private TextView tvSignIn;
-
-
+    private LinearLayout llSignIn;
 
 
     @Override
@@ -44,16 +47,16 @@ public class RegistrationActivity extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
-        etPassword2 = findViewById(R.id.et_repeat_password);
-        btnRegister = findViewById(R.id.btnReg);
-        tvSignIn = findViewById(R.id.tv_sign_in);
+        etPassword2 = findViewById(R.id.et_password2);
+        btnRegister = findViewById(R.id.regBTN);
+        llSignIn = findViewById(R.id.ll_sign);
         initListener();
     }
 
-    private void initListener(){
+    private void initListener() {
         btnRegister.setOnClickListener(view -> {
             if (etEmail.getText().toString().equals("")) {
                 Toast.makeText(getApplicationContext(), "Введите почту", Toast.LENGTH_SHORT).show();
@@ -81,7 +84,6 @@ public class RegistrationActivity extends AppCompatActivity {
             }
 
             String id = UUID.randomUUID().toString();
-
             Client client = AppwriteClient.getClient();
             Account account = new Account(client);
 
@@ -104,10 +106,23 @@ public class RegistrationActivity extends AppCompatActivity {
                                         Result.Failure failure = (Result.Failure) o;
                                         throw failure.exception;
                                     } else {
-                                        Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        Log.i("AAA", "прошло");
+                                        account.createEmailSession(etEmail.getText().toString(), etPassword.getText().toString(), new Continuation<Session>() {
+                                            @NonNull
+                                            @Override
+                                            public CoroutineContext getContext() {
+                                                return EmptyCoroutineContext.INSTANCE;
+                                            }
+
+                                            @Override
+                                            public void resumeWith(@NonNull Object o) {
+                                                Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                                                startActivity(intent);
+                                                Log.i("AAA", "прошло");
+                                            }
+                                        });
                                     }
+
+
                                 } catch (Throwable th) {
                                     Log.e("ERROR", th.toString());
                                 }
@@ -119,7 +134,7 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        tvSignIn.setOnClickListener(view -> {
+        llSignIn.setOnClickListener(view -> {
             Intent intent = new Intent(RegistrationActivity.this, AuthActivity.class);
             startActivity(intent);
         });
