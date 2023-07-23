@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/userChoiceFragment">
+
+    <fragment
+        android:id="@+id/userChoiceFragment"
+        android:name="com.platovco.repetitor.fragments.general.UserChoice.UserChoiceFragment"
+        android:label="fragment_user_choice"
+        tools:layout="@layout/fragment_user_choice" >
+        <action
+            android:id="@+id/action_userChoiceFragment_to_addTutorInformationFragment"
+            app:destination="@id/addTutorInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTutorInformationFragment"
+        android:name="com.platovco.repetitor.fragments.general.AddTutorInformation.AddTutorInformationFragment"
+        android:label="fragment_add_tutor_information"
+        tools:layout="@layout/fragment_add_tutor_information" >
+        <action
+            android:id="@+id/action_addTutorInformationFragment_to_tutorChoiceHighFragment"
+            app:destination="@id/tutorChoiceHighFragment" />
+        <action
+            android:id="@+id/action_addTutorInformationFragment_to_tutorChoiceDirectionFragment"
+            app:destination="@id/tutorChoiceDirectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutorChoiceHighFragment"
+        android:name="com.platovco.repetitor.fragments.tutor.TutorChoiceHigh.TutorChoiceHighFragment"
+        android:label="fragment_tutor_choice_high"
+        tools:layout="@layout/fragment_tutor_choice_high" />
+    <fragment
+        android:id="@+id/tutorChoiceDirectionFragment"
+        android:name="com.platovco.repetitor.fragments.tutor.TutorChoiceDirection.TutorChoiceDirectionFragment"
+        android:label="TutorChoiceDirectionFragment"
+        tools:layout="@layout/fragment_tutor_choice_direction"/>
+</navigation>
