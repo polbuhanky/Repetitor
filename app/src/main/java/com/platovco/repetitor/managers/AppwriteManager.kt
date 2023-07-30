@@ -16,6 +16,7 @@ import kotlin.coroutines.Continuation
 import kotlin.coroutines.CoroutineContext
 
 object AppwriteManager {
+
     suspend fun addTutorAccount(tutorAccount: TutorAccount) {
         val client = AppwriteClient.getClient()
         val databases = Databases(client)
@@ -38,42 +39,29 @@ object AppwriteManager {
         }
     }
 
-    suspend fun getAllHighs(highsLD: MutableLiveData<java.util.ArrayList<String>>) {
+
+    suspend fun getAllHighs(highsLD: MutableLiveData<java.util.ArrayList<String>>, textForSearch : String) {
         val client = AppwriteClient.getClient()
         val databases = Databases(client)
+        var queries = listOf(
+            Query.limit(10),
+            Query.search("vuz", textForSearch)
+        )
 
         try {
             val highs = ArrayList<String>()
+            if(textForSearch.isEmpty()){
+                queries = listOf(
+                    Query.limit(10)
+                )
+            }
             val documents = databases.listDocuments(
                 databaseId = "64a845269d40bb3fd619",
                 collectionId = "64b11c868421f3ecce18",
-                queries = listOf(
-                    Query.limit(25),
-                )
+                queries = queries
             )
             documents.documents.forEach {
                 highs.add((it.data as MutableMap<*, *>?)?.get("vuz").toString())
-            }
-            var size = documents.documents.size
-            var lastId = documents.documents[documents.documents.size - 1].id
-
-            while (size == 25) {
-                val documents2 = databases.listDocuments(
-                    databaseId = "64a845269d40bb3fd619",
-                    collectionId = "64b11c868421f3ecce18",
-                    queries = listOf(
-                        Query.limit(25),
-                        Query.cursorAfter(lastId),
-                    )
-                )
-                documents2.documents.forEach {
-                    highs.add((it.data as MutableMap<*, *>?)?.get("vuz").toString())
-                }
-                if (documents2.documents.isEmpty()) {
-                    break;
-                }
-                lastId = documents2.documents[documents2.documents.size - 1].id
-                size = documents2.documents.size
             }
             highsLD.postValue(highs)
         } catch (e: AppwriteException) {
@@ -82,49 +70,32 @@ object AppwriteManager {
     }
 
     suspend fun getAllDirections(
-        brand: String,
-        modelsLD: MutableLiveData<java.util.ArrayList<String>>
+        directionsLD: MutableLiveData<java.util.ArrayList<String>>,
+        textForSearch: String
     ) {
         val client = AppwriteClient.getClient()
         val databases = Databases(client)
+        var queries = listOf(
+            Query.limit(10),
+            Query.search("direction", textForSearch)
+        )
 
         try {
-            val models = ArrayList<String>()
+            val directions = ArrayList<String>()
+            if(textForSearch.isEmpty()){
+                queries = listOf(
+                    Query.limit(10)
+                )
+            }
             val documents = databases.listDocuments(
                 databaseId = "64a845269d40bb3fd619",
                 collectionId = "64b11ca1e184ddbec98a",
-                queries = listOf(
-                    Query.limit(25),
-                    //Query.equal("direction", brand)
-                )
+                queries = queries,
             )
             documents.documents.forEach {
-                models.add((it.data as MutableMap<*, *>?)?.get("direction").toString())
+                directions.add((it.data as MutableMap<*, *>?)?.get("direction").toString())
             }
-            var size = documents.documents.size
-            var lastId = documents.documents[documents.documents.size - 1].id
-
-            while (size == 25) {
-                val documents2 = databases.listDocuments(
-                    databaseId = "64a845269d40bb3fd619",
-                    collectionId = "64b11ca1e184ddbec98ac",
-                    queries = listOf(
-                        Query.limit(25),
-                        Query.cursorAfter(lastId),
-                        //Query.equal("direction", brand)
-
-                    )
-                )
-                documents2.documents.forEach {
-                    models.add((it.data as MutableMap<*, *>?)?.get("direction").toString())
-                }
-                if (documents2.documents.isEmpty()) {
-                    break;
-                }
-                lastId = documents2.documents[documents2.documents.size - 1].id
-                size = documents2.documents.size
-            }
-            modelsLD.postValue(models)
+            directionsLD.postValue(directions)
         } catch (e: AppwriteException) {
             Log.e("Appwrite", "Error: " + e.message)
         }

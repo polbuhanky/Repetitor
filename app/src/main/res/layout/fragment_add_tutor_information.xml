@@ -54,51 +54,47 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_high"
+        <EditText
+            android:id="@+id/et_high"
             android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_marginHorizontal="30sp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="20sp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            app:cardElevation="20sp">
+            android:background="@drawable/edit_text_style"
+            android:hint="ВУЗ"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
-            <TextView
-                android:id="@+id/tv_High"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/blue"
-                android:gravity="center"
-                android:hint="Выберите ВУЗ"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="15sp" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_direction"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_high"
             android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_marginHorizontal="30sp"
+            android:layout_height="50dp" />
+
+        <EditText
+            android:id="@+id/et_direction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="20sp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            app:cardElevation="20sp">
+            android:background="@drawable/edit_text_style"
+            android:hint="Направление"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
-            <TextView
-                android:id="@+id/tv_directio"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/blue"
-                android:gravity="center"
-                android:hint="Выберите направление"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="15sp" />
-
-        </androidx.cardview.widget.CardView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_direction"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
 
         <EditText
             android:id="@+id/et_experience"

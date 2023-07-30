@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.platovco.repetitor.R;
+import com.platovco.repetitor.fragments.general.AddTutorInformation.AddTutorInformationFragment;
 import com.platovco.repetitor.fragments.tutor.TutorChoiceDirection.TutorChoiceDirectionFragment;
 
 import java.util.ArrayList;
@@ -21,10 +22,10 @@ public class ChooseDirectionAdapter extends RecyclerView.Adapter<ChooseDirection
     ArrayList<String> brands = new ArrayList<>();
     Context context;
     LayoutInflater inflater;
-    TutorChoiceDirectionFragment fragment;
+    AddTutorInformationFragment fragment;
 
 
-    public ChooseDirectionAdapter(Context context, ArrayList<String> brands, TutorChoiceDirectionFragment fragment) {
+    public ChooseDirectionAdapter(Context context, ArrayList<String> brands, AddTutorInformationFragment fragment) {
         this.brands = brands;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
@@ -46,7 +47,6 @@ public class ChooseDirectionAdapter extends RecyclerView.Adapter<ChooseDirection
             Bundle result = new Bundle();
             result.putString("direction", brand);
             fragment.getParentFragmentManager().setFragmentResult("modelKey", result);
-            Navigation.findNavController(view).navigateUp();
         });
     }
 

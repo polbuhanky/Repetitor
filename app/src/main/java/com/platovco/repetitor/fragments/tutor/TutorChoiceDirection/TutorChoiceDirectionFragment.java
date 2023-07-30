@@ -64,7 +64,7 @@ public class TutorChoiceDirectionFragment extends Fragment {
             brand = getArguments().getString("vuz");
         }
         init();
-        AppwriteManager.INSTANCE.getAllDirections(brand, mViewModel.directionsLD, AppwriteManager.INSTANCE.getContinuation((result, throwable) -> {
+        AppwriteManager.INSTANCE.getAllDirections(mViewModel.directionsLD, "", AppwriteManager.INSTANCE.getContinuation((result, throwable) -> {
             Log.d("AppW Result: ", String.valueOf(result));
             Log.d("AppW Exception: ", String.valueOf(throwable));
         }));
@@ -90,8 +90,8 @@ public class TutorChoiceDirectionFragment extends Fragment {
             directions.clear();
             directions.addAll(mViewModel.directionsLD.getValue());
             directions = new ArrayList<>(allDirections);
-            adapter = new ChooseDirectionAdapter(getActivity(), directions, TutorChoiceDirectionFragment.this);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            //adapter = new ChooseDirectionAdapter(getActivity(), directions, TutorChoiceDirectionFragment.this);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
             recyclerView.setAdapter(adapter);
         });
         backBTN.setOnClickListener(view -> Navigation.findNavController(view).navigateUp());
@@ -109,19 +109,10 @@ public class TutorChoiceDirectionFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                ExecutorService executor = Executors.newSingleThreadExecutor();
-                executor.execute(() ->
-                {
-                    directions.clear();
-                    for (String brand : allDirections) {
-                        if (brand.toLowerCase(Locale.ROOT).contains(editable.toString().toLowerCase(Locale.ROOT))) {
-                            directions.add(brand);
-                        }
-                    }
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(() -> adapter.notifyDataSetChanged());
-                });
-
+                AppwriteManager.INSTANCE.getAllDirections(mViewModel.directionsLD, editable.toString(), AppwriteManager.INSTANCE.getContinuation((result, throwable) -> {
+                    Log.d("AppW Result: ", String.valueOf(result));
+                    Log.d("AppW Exception: ", String.valueOf(throwable));
+                }));
             }
         });
     }

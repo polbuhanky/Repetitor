@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.platovco.repetitor.R;
+import com.platovco.repetitor.fragments.general.AddTutorInformation.AddTutorInformationFragment;
 import com.platovco.repetitor.fragments.tutor.TutorChoiceHigh.TutorChoiceHighFragment;
 
 import java.util.ArrayList;
@@ -21,10 +22,10 @@ public class ChooseHighAdapter extends RecyclerView.Adapter<ChooseHighAdapter.Vi
     ArrayList<String> brands = new ArrayList<>();
     Context context;
     LayoutInflater inflater;
-    TutorChoiceHighFragment fragment;
+    AddTutorInformationFragment fragment;
 
 
-    public ChooseHighAdapter(Context context, ArrayList<String> brands, TutorChoiceHighFragment fragment) {
+    public ChooseHighAdapter(Context context, ArrayList<String> brands, AddTutorInformationFragment fragment) {
         this.brands = brands;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
@@ -46,7 +47,6 @@ public class ChooseHighAdapter extends RecyclerView.Adapter<ChooseHighAdapter.Vi
             Bundle result = new Bundle();
             result.putString("high", brand);
             fragment.getParentFragmentManager().setFragmentResult("brandKey", result);
-            Navigation.findNavController(view).navigateUp();
         });
     }
 

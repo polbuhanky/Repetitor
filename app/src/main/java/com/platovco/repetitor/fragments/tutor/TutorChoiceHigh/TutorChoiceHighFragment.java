@@ -61,7 +61,7 @@ public class TutorChoiceHighFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(TutorChoiceHighViewModel.class);
         init();
-        AppwriteManager.INSTANCE.getAllHighs(mViewModel.highsLD, AppwriteManager.INSTANCE.getContinuation((result, throwable) -> {
+        AppwriteManager.INSTANCE.getAllHighs(mViewModel.highsLD, "", AppwriteManager.INSTANCE.getContinuation((result, throwable) -> {
             Log.d("AppW Result: ", String.valueOf(result));
             Log.d("AppW Exception: ", String.valueOf(throwable));
         }));
@@ -76,12 +76,14 @@ public class TutorChoiceHighFragment extends Fragment {
                 searchCV.setVisibility(View.VISIBLE);
             }
             brands = new ArrayList<>(allBrands);
-            adapter = new ChooseHighAdapter(getActivity(), brands, TutorChoiceHighFragment.this);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            //adapter = new ChooseHighAdapter(getActivity(), brands, TutorChoiceHighFragment.this);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
             recyclerView.setAdapter(adapter);
         });
         backBTN.setOnClickListener(view ->
                 Navigation.findNavController(view).navigateUp());
+
+
         searchET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -96,18 +98,11 @@ public class TutorChoiceHighFragment extends Fragment {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void afterTextChanged(Editable editable) {
-                ExecutorService executor = Executors.newSingleThreadExecutor();
-                executor.execute(() ->
-                {
-                    brands.clear();
-                    for (String brand : allBrands) {
-                        if (brand.toLowerCase(Locale.ROOT).contains(editable.toString().toLowerCase(Locale.ROOT))) {
-                            brands.add(brand);
-                        }
-                    }
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(() -> adapter.notifyDataSetChanged());
-                });
+                AppwriteManager.INSTANCE.getAllHighs(mViewModel.highsLD, editable.toString(), AppwriteManager.INSTANCE.getContinuation((result, throwable) -> {
+                    Log.d("AppW Result: ", String.valueOf(result));
+                    Log.d("AppW Exception: ", String.valueOf(throwable));
+                }));
+
             }
         });
     }

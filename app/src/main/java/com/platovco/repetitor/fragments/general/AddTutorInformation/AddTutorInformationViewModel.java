@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.platovco.repetitor.models.TutorAccount;
 
+import java.util.ArrayList;
+
 public class AddTutorInformationViewModel extends ViewModel {
 
     public MutableLiveData<String> photoUrl = new MutableLiveData<>();
@@ -15,6 +17,8 @@ public class AddTutorInformationViewModel extends ViewModel {
     public MutableLiveData<String> nameLD = new MutableLiveData<>();
     public MutableLiveData<String> highLD = new MutableLiveData<>();
     public MutableLiveData<String> directionLD = new MutableLiveData<>();
+    MutableLiveData<ArrayList<String>> highsLD = new MutableLiveData<>(new ArrayList<>());
+    MutableLiveData<ArrayList<String>> directionsLD = new MutableLiveData<>(new ArrayList<>());
 
 
     public TutorAccount createTutorAccount(){
