@@ -54,6 +54,8 @@ public class UserChoiceFragment extends Fragment {
         btnBack = binding.btnBack;
         btnTutor.setOnClickListener( view -> Navigation.findNavController(view)
                 .navigate(R.id.action_userChoiceFragment_to_addTutorInformationFragment));
+        btnStudent.setOnClickListener(view -> Navigation.findNavController(view)
+                .navigate(R.id.action_userChoiceFragment_to_addStudentInformationFragment));
         //btnBack.setOnClickListener( view -> Navigation.findNavController(view)
         //       .navigate());
     }

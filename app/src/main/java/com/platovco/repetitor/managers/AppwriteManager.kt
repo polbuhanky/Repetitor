@@ -2,6 +2,7 @@ package com.platovco.repetitor.managers
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.platovco.repetitor.models.StudentAccount
 import com.platovco.repetitor.models.TutorAccount
 import io.appwrite.Query
 import io.appwrite.exceptions.AppwriteException
@@ -32,6 +33,28 @@ object AppwriteManager {
                     "Photo" to tutorAccount.photoUrl,
                     "Direction" to tutorAccount.direction,
                     "Experience" to tutorAccount.experience,
+                )
+            )
+        } catch (e: Exception) {
+            Log.e("Appwrite", "Error: " + e.message)
+        }
+    }
+
+    suspend fun addStudentAccount(studentAccount: StudentAccount) {
+        val client = AppwriteClient.getClient()
+        val databases = Databases(client)
+        val uuid = getAccount().id
+        try {
+            databases.createDocument(
+                databaseId = "64a845269d40bb3fd619",
+                collectionId = "64a992739f88da356852",
+                documentId = uuid,
+                data = mapOf(
+                    "Full_name" to studentAccount.name,
+                    "Education" to studentAccount.high,
+                    "Photo" to studentAccount.photoUrl,
+                    "Direction" to studentAccount.direction,
+                    "Experience" to studentAccount.experience,
                 )
             )
         } catch (e: Exception) {
