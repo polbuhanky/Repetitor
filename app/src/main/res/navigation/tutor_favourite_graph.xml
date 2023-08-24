@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tutor_favourite_graph.xml"
+    app:startDestination="@id/tutorFavoriteFragment">
+
+    <fragment
+        android:id="@+id/tutorFavoriteFragment"
+        android:name="com.platovco.repetitor.fragments.tutor.TutorFavorite.TutorFavoriteFragment"
+        android:label="fragment_tutor_favorite"
+        tools:layout="@layout/fragment_tutor_favorite" />
+</navigation>

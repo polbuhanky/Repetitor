@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.platovco.repetitor.R;
 import com.platovco.repetitor.fragments.general.AddTutorInformation.AddTutorInformationFragment;
-import com.platovco.repetitor.fragments.tutor.TutorChoiceDirection.TutorChoiceDirectionFragment;
 
 import java.util.ArrayList;
 

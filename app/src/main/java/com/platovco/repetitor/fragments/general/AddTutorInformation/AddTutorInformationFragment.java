@@ -40,8 +40,6 @@ import com.platovco.repetitor.R;
 import com.platovco.repetitor.adapters.ChooseDirectionAdapter;
 import com.platovco.repetitor.adapters.ChooseHighAdapter;
 import com.platovco.repetitor.databinding.FragmentAddTutorInformationBinding;
-import com.platovco.repetitor.fragments.tutor.TutorChoiceDirection.TutorChoiceDirectionFragment;
-import com.platovco.repetitor.fragments.tutor.TutorChoiceHigh.TutorChoiceHighFragment;
 import com.platovco.repetitor.managers.AppwriteManager;
 import com.platovco.repetitor.managers.CompressorManager;
 import com.platovco.repetitor.models.TutorAccount;
@@ -178,10 +176,6 @@ public class AddTutorInformationFragment extends Fragment {
         mViewModel.directionsLD.observe(getViewLifecycleOwner(), s -> {
             allDirections.clear();
             allDirections.addAll(mViewModel.directionsLD.getValue());
-            //if (!allDirections.isEmpty()) {
-            //    progressBar.setVisibility(View.GONE);
-            //    searchCV.setVisibility(View.VISIBLE);
-            //}
             directions.clear();
             directions.addAll(mViewModel.directionsLD.getValue());
             directions = new ArrayList<>(allDirections);
@@ -220,6 +214,8 @@ public class AddTutorInformationFragment extends Fragment {
                             .into((ImageView) view);
                 }));
         btnDone.setOnClickListener(view -> createDocument());
+        btnDone.setOnClickListener(view -> Navigation.findNavController(view)
+                .navigate(R.id.action_addTutorInformationFragment_to_tutorMainFragment));
 
     }
 

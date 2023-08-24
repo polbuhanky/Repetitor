@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.platovco.repetitor.R;
 import com.platovco.repetitor.fragments.general.AddTutorInformation.AddTutorInformationFragment;
-import com.platovco.repetitor.fragments.tutor.TutorChoiceHigh.TutorChoiceHighFragment;
-
 import java.util.ArrayList;
 
 public class ChooseHighAdapter extends RecyclerView.Adapter<ChooseHighAdapter.ViewHolder> {

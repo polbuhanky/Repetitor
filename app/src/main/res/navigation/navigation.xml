@@ -23,25 +23,26 @@
         android:label="fragment_add_tutor_information"
         tools:layout="@layout/fragment_add_tutor_information" >
         <action
-            android:id="@+id/action_addTutorInformationFragment_to_tutorChoiceHighFragment"
-            app:destination="@id/tutorChoiceHighFragment" />
-        <action
-            android:id="@+id/action_addTutorInformationFragment_to_tutorChoiceDirectionFragment"
-            app:destination="@id/tutorChoiceDirectionFragment" />
+            android:id="@+id/action_addTutorInformationFragment_to_tutorMainFragment"
+            app:destination="@id/tutorMainFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/tutorChoiceHighFragment"
-        android:name="com.platovco.repetitor.fragments.tutor.TutorChoiceHigh.TutorChoiceHighFragment"
-        android:label="fragment_tutor_choice_high"
-        tools:layout="@layout/fragment_tutor_choice_high" />
-    <fragment
-        android:id="@+id/tutorChoiceDirectionFragment"
-        android:name="com.platovco.repetitor.fragments.tutor.TutorChoiceDirection.TutorChoiceDirectionFragment"
-        android:label="TutorChoiceDirectionFragment"
-        tools:layout="@layout/fragment_tutor_choice_direction"/>
     <fragment
         android:id="@+id/addStudentInformationFragment"
         android:name="com.platovco.repetitor.fragments.general.AddStudentInformation.AddStudentInformationFragment"
         android:label="AddStudentInformationFragment"
-        tools:layout="@layout/fragment_add_student_information"/>
+        tools:layout="@layout/fragment_add_student_information">
+        <action
+            android:id="@+id/action_addStudentInformationFragment_to_studentMainFragment"
+            app:destination="@id/studentMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentMainFragment"
+        android:name="com.platovco.repetitor.fragments.student.StudentMain.StudentMainFragment"
+        android:label="fragment_student_main"
+        tools:layout="@layout/fragment_student_main" />
+    <fragment
+        android:id="@+id/tutorMainFragment"
+        android:name="com.platovco.repetitor.fragments.tutor.TutorMain.TutorMainFragment"
+        android:label="fragment_tutor_main"
+        tools:layout="@layout/fragment_tutor_main" />
 </navigation>
