@@ -21,8 +21,9 @@
             android:id="@+id/btn_tutor"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button"
-
+            android:background="@drawable/border"
+            android:textColor="@color/white"
+            android:layout_marginTop="50dp"
             android:text="Я репетитор" />
 
         <Button
@@ -30,15 +31,17 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/button"
+            android:textColor="@color/white"
+            android:background="@drawable/border"
             android:text="Я студент" />
 
         <Button
             android:id="@+id/btn_back"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/orange_border"
+            android:textColor="@color/white"
             android:text="Выйти" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

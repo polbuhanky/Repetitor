@@ -50,20 +50,23 @@ object AppwriteManager {
                 collectionId = "64a992739f88da356852",
                 documentId = uuid,
                 data = mapOf(
-                    "Full_name" to studentAccount.name,
-                    "Education" to studentAccount.high,
                     "Photo" to studentAccount.photoUrl,
-                    "Direction" to studentAccount.direction,
-                    "Experience" to studentAccount.experience,
+                    "Age" to studentAccount.age,
+                    "Name" to studentAccount.name,
                 )
             )
         } catch (e: Exception) {
             Log.e("Appwrite", "Error: " + e.message)
         }
     }
+    suspend fun signOut() {
+        val client = AppwriteClient.getClient()
+        val account = Account(client)
+        account.deleteSessions()
+    }
 
 
-    suspend fun getAllHighs(highsLD: MutableLiveData<java.util.ArrayList<String>>, textForSearch : String) {
+    suspend fun getAllHighs(highsLD: MutableLiveData<ArrayList<String>>, textForSearch : String) {
         val client = AppwriteClient.getClient()
         val databases = Databases(client)
         var queries = listOf(

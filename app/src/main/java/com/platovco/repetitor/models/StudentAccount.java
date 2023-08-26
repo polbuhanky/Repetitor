@@ -7,26 +7,20 @@ import java.util.Map;
 public class StudentAccount {
     private String photoUrl;
     private String name;
-    private String high;
-    private String direction;
-    private String experience;
+    private String age;
+
     private String uuid;
 
-    public StudentAccount(String photoUrl, String name, String high, String direction, String experience) {
+    public StudentAccount(String photoUrl, String name, String age) {
         this.photoUrl = photoUrl;
         this.name = name;
-        this.high = high;
-        this.direction = direction;
-        this.experience = experience;
+        this.age = age;
     }
 
 
     public StudentAccount(@NotNull Map<?, ?> map) {
         this.photoUrl = String.valueOf(map.get("photoUrl"));
-        this.name = String.valueOf(map.get("name"));
-        this.high = String.valueOf(map.get("high"));
-        this.direction = String.valueOf(map.get("direction"));
-        this.experience = String.valueOf(map.get("experience"));
+        this.name = String.valueOf(map.get("age"));
         this.uuid = String.valueOf(map.get("$id"));
     }
     public StudentAccount() {}
@@ -48,30 +42,6 @@ public class StudentAccount {
         this.name = name;
     }
 
-    public String getHigh() {
-        return high;
-    }
-
-    public void setHigh(String carModel) {
-        this.high = carModel;
-    }
-
-    public String getDirection() {
-        return direction;
-    }
-
-    public void setDirection(String carBrand) {
-        this.direction = carBrand;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setExperience(String carNumber) {
-        this.experience = carNumber;
-    }
-
     public String getUuid() {
         return uuid;
     }
@@ -80,4 +50,11 @@ public class StudentAccount {
         this.uuid = uuid;
     }
 
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
 }

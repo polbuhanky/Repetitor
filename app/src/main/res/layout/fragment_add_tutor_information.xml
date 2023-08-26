@@ -23,28 +23,39 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/pi_avatar"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:paddingTop="10dp"
                 android:src="@drawable/avatar"
-                app:civ_border_color="#FF000000"
+                app:civ_border_color="@color/colorAccent"
                 app:civ_border_width="2dp" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/avatarTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/white"
-                android:text="Cменить фото" />
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="Выбрать фото"
+                android:textSize="12dp"
+                android:textColor="@color/white" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="30dp"
+            android:text="ФИО"
+            android:textColor="@color/blue" />
 
         <EditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_style"
             android:hint="ФИО"
             android:paddingLeft="10dp"
@@ -52,15 +63,22 @@
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColorHint="@color/light_text" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:text="ВУЗ"
+            android:textColor="@color/blue" />
 
         <EditText
             android:id="@+id/et_high"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
             android:background="@drawable/edit_text_style"
             android:hint="ВУЗ"
             android:paddingLeft="10dp"
@@ -68,20 +86,34 @@
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColorHint="@color/light_text" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_high"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingStart="15dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:ignore="RtlSymmetry"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_tip" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Направление"
+            android:textColor="@color/blue" />
 
         <EditText
             android:id="@+id/et_direction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
             android:background="@drawable/edit_text_style"
             android:hint="Направление"
             android:paddingLeft="10dp"
@@ -89,20 +121,34 @@
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColorHint="@color/light_text" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_direction"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingStart="15dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:ignore="RtlSymmetry"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_tip" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Стаж"
+            android:textColor="@color/blue" />
 
         <EditText
             android:id="@+id/et_experience"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
             android:background="@drawable/edit_text_style"
             android:hint="Стаж"
             android:paddingLeft="10dp"
@@ -110,21 +156,23 @@
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColorHint="@color/light_text" />
 
 
         <Button
             android:id="@+id/btn_done"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/button"
-            android:textColor="@color/white"
+            android:text="Готово"
             android:textAllCaps="false"
-            android:text="Готово"/>
-
+            android:textColor="@color/dark_text"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
     </LinearLayout>
 
 

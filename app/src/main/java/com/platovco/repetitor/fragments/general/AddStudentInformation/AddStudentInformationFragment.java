@@ -66,15 +66,8 @@ public class AddStudentInformationFragment extends Fragment {
     private FragmentAddStudentInformationBinding binding;
     private ImageView ivAvatar;
     private EditText etName;
-    private EditText etExperience;
     private Button btnDone;
     private EditText etHigh;
-    private EditText etDirection;
-    ArrayList<String> brands = new ArrayList<>();
-    ArrayList<String> allBrands = new ArrayList<>();
-    ArrayList<String> allDirections = new ArrayList<>();
-    ArrayList<String> directions = new ArrayList<>();
-
     private AddStudentInformationViewModel mViewModel;
 
     public static AddStudentInformationFragment newInstance() {
@@ -100,17 +93,15 @@ public class AddStudentInformationFragment extends Fragment {
     private void init(){
         ivAvatar = binding.piAvatar;
         etName = binding.etName;
-        etExperience = binding.etExperience;
         btnDone = binding.btnDone;
-        etHigh = binding.etHigh;
-        etDirection = binding.etDirection;
+        etHigh = binding.etAge;
     }
 
     private void observe() {
-        mViewModel.directionLD.observe(getViewLifecycleOwner(), model ->
-                etDirection.setText(model));
-        mViewModel.highLD.observe(getViewLifecycleOwner(), brand ->
-                etHigh.setText(brand));
+        mViewModel.ageLD.observe(getViewLifecycleOwner(), model ->
+                binding.etAge.setText(model));
+        mViewModel.nameLD.observe(getViewLifecycleOwner(), brand ->
+                binding.etName.setText(brand));
         mViewModel.photoUri.observe(getViewLifecycleOwner(), uri ->
                 Glide.with(requireContext())
                         .load(uri)
@@ -118,40 +109,32 @@ public class AddStudentInformationFragment extends Fragment {
     }
 
     private void initListener() {
-        etName.addTextChangedListener( new CustomTextWatcher(mViewModel.nameLD));
-        etExperience.addTextChangedListener( new CustomTextWatcher(mViewModel.experienceLD));
-        etHigh.addTextChangedListener( new CustomTextWatcher(mViewModel.highLD));
-        etDirection.addTextChangedListener( new CustomTextWatcher(mViewModel.directionLD));
-
+        binding.etName.addTextChangedListener( new CustomTextWatcher(mViewModel.nameLD));
+        binding.etAge.addTextChangedListener( new CustomTextWatcher(mViewModel.ageLD));
         ivAvatar.setOnClickListener(view -> TedImagePicker.with(requireContext())
                 .start(uri -> {
                     mViewModel.photoUri.setValue(uri);
                     Glide.with(requireContext())
                             .load(uri)
                             .into((ImageView) view);
+                    binding.avatarTV.setText("Сменить фото");
                 }));
         btnDone.setOnClickListener(view -> createDocument());
     }
 
     private void createDocument(){
         if (mViewModel.nameLD.getValue() == null) {
-            Toast.makeText(getContext(), "Введите ваше ФИО", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Введите Ваше имя", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if (mViewModel.nameLD.getValue() == null) {
+            Toast.makeText(getContext(), "Введите Ваш возраст", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (mViewModel.photoUri.getValue() == null) {
             Toast.makeText(getContext(), "Прикрепите ваше фото", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (mViewModel.highLD.getValue() == null) {
-            Toast.makeText(getContext(), "Введите ВУЗ", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (mViewModel.directionLD.getValue() == null) {
-            Toast.makeText(getContext(), "Введите направление", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (mViewModel.experienceLD.getValue() == null) {
-            Toast.makeText(getContext(), "Введите стаж", Toast.LENGTH_SHORT).show();
             return;
         }
         @SuppressLint("NotifyDataSetChanged") AddStudentInformationFragment.PhotosDownloadedCallback photosDownloadedCallback = () -> {

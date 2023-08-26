@@ -134,11 +134,11 @@ dependencies {
     implementation 'com.amazonaws:aws-android-sdk-cognito:2.6.0'
     implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
 
-    implementation 'com.google.android.material:material:1.11.0-alpha02'
-    implementation 'com.facebook.fresco:fresco:2.1.0'
-    implementation 'com.github.yuyakaido:cardstackview:2.3.4'
+//    implementation 'com.google.android.material:material:1.11.0-alpha02'
+//    implementation 'com.facebook.fresco:fresco:2.1.0'
+//    implementation 'com.github.yuyakaido:cardstackview:2.3.4'
 
-    implementation "com.yuyakaido.android:card-stack-view:2.3.4"
+//    implementation "com.yuyakaido.android:card-stack-view:2.3.4"
 
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'

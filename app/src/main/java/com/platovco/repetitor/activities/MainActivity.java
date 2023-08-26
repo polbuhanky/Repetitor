@@ -1,6 +1,7 @@
 package com.platovco.repetitor.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,5 +59,10 @@ public class MainActivity extends AppCompatActivity {
         //        }});
         //    finish();
         //});
+    }
+
+    @Override
+    public void onBackPressed() {
+        Navigation.findNavController(this, R.id.fragmentContainerView).navigateUp();
     }
 }

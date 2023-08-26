@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.platovco.repetitor.R;
@@ -34,15 +33,15 @@ public class ChooseDirectionAdapter extends RecyclerView.Adapter<ChooseDirection
     @NonNull
     @Override
     public ChooseDirectionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_direction, parent, false);
+        View view = inflater.inflate(R.layout.item_tip, parent, false);
         return new ViewHolder(view, context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String brand = brands.get(position);
-        holder.name.setText(brand);
-        holder.cardView.setOnClickListener(view -> {
+        holder.tipTV.setText(brand);
+        holder.tipTV.setOnClickListener(view -> {
             Bundle result = new Bundle();
             result.putString("direction", brand);
             fragment.getParentFragmentManager().setFragmentResult("modelKey", result);
@@ -55,13 +54,11 @@ public class ChooseDirectionAdapter extends RecyclerView.Adapter<ChooseDirection
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView name;
-        final CardView cardView;
+        final TextView tipTV;
 
         public ViewHolder(@NonNull View itemView, final Context context) {
             super(itemView);
-            name = itemView.findViewById(R.id.name);
-            cardView = itemView.findViewById(R.id.card);
+            tipTV = itemView.findViewById(R.id.tipTV);
         }
     }
 }

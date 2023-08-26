@@ -212,6 +212,7 @@ public class AddTutorInformationFragment extends Fragment {
                     Glide.with(requireContext())
                             .load(uri)
                             .into((ImageView) view);
+                    binding.avatarTV.setText("Сменить фото");
                 }));
         btnDone.setOnClickListener(view -> createDocument());
         btnDone.setOnClickListener(view -> Navigation.findNavController(view)
