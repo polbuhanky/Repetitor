@@ -52,10 +52,8 @@ android {
         }
     }
     buildFeatures {
+        dataBinding true
         viewBinding true
-    }
-    buildFeatures {
-        dataBinding = true
     }
     apply plugin: 'kotlin-kapt'
 }
