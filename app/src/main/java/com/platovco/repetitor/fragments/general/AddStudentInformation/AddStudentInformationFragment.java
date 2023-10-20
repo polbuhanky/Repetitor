@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -159,8 +160,8 @@ public class AddStudentInformationFragment extends Fragment {
             AppwriteManager.INSTANCE.addStudentAccount(studentAccount, AppwriteManager.INSTANCE.getContinuation((s, throwable) -> {
                 if (throwable != null) Log.e("add", String.valueOf(throwable));
                 Handler handler = new Handler(Looper.getMainLooper());
-                //handler.post(() ->
-                //Navigation.findNavController(requireActivity(), R.id.globalNavContainer).navigate(R.id.action_addActiveInformationFragment_to_mainFragment));
+                handler.post(() ->
+                    Navigation.findNavController(requireActivity(), R.id.fragmentContainerView).navigate(R.id.action_addStudentInformationFragment_to_studentMainFragment));
             }));
         };
         if (mViewModel.photoUri.getValue() == null) {
@@ -195,37 +196,15 @@ public class AddStudentInformationFragment extends Fragment {
     }
 
     private Observable<String> uploadImage(File file, String uuid) {
-        try {
-            BasicAWSCredentials creds = new BasicAWSCredentials("YCAJE13hLTon0cjh9HNs2w7Nw", "YCOBkvy7bLg-d413FJ2Ey-raB8LcJeg2xM-XcFWO");
-            AmazonS3Client s3Client = new AmazonS3Client(creds);
-            Callable<String> callable = () -> s3Client.getUrl("mentorium.userphotos", uuid).toString();
-            s3Client.setEndpoint("storage.yandexcloud.net");
-            TransferUtility trans = TransferUtility.builder().context(getActivity().getApplicationContext()).s3Client(s3Client).build();
-            TransferObserver transferObserver = trans.upload("mentorium.userphotos", uuid, file);
-            transferObserver.setTransferListener(new TransferListener() {
-                @Override
-                public void onStateChanged(int id, TransferState state) {
-                    try {
-
-                        callable.call();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-                    Log.d("io", "km");
-                }
-
-                @Override
-                public void onError(int id, Exception ex) {
-                    Log.e("error", ex.getMessage());
-
-                }
-            });
+        try{
+            AppwriteManager.INSTANCE.createFileStudentStorage(uuid, file, AppwriteManager.INSTANCE.getContinuation((result, throwable) -> {
+                Log.d("AppW Result: ", String.valueOf(result));
+                Log.d("AppW Exception: ", String.valueOf(throwable));
+            }));
+            Callable<String> callable = () -> "http://89.253.219.76/v1/storage/buckets/65251e9c04cdd06bcec8/files/"+uuid+"/view?project=649d4dbdcf623484dd45";
             return Observable.fromCallable(callable);
-        } catch (Exception e) {
+        }
+        catch (Exception e){
             e.printStackTrace();
             return null;
         }

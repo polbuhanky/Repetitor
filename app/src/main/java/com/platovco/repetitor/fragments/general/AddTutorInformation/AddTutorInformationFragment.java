@@ -1,7 +1,5 @@
 package com.platovco.repetitor.fragments.general.AddTutorInformation;
 
-import androidx.cardview.widget.CardView;
-
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,15 +24,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.bumptech.glide.Glide;
 import com.platovco.repetitor.R;
 import com.platovco.repetitor.adapters.ChooseDirectionAdapter;
@@ -113,7 +104,7 @@ public class AddTutorInformationFragment extends Fragment {
     }
 
     private void init(){
-        ivAvatar = binding.piAvatar;
+        ivAvatar = (ImageView) binding.piAvatar;
         etName = binding.etName;
         etExperience = binding.etExperience;
         btnDone = binding.btnDone;
@@ -142,10 +133,6 @@ public class AddTutorInformationFragment extends Fragment {
         mViewModel.highsLD.observe(getViewLifecycleOwner(), s -> {
             allBrands.clear();
             allBrands.addAll(mViewModel.highsLD.getValue());
-            //if (!allBrands.isEmpty()) {
-            //    progressBar.setVisibility(View.GONE);
-            //    searchCV.setVisibility(View.VISIBLE);
-            //}
             brands = new ArrayList<>(allBrands);
             adapterHigh = new ChooseHighAdapter(getActivity(), brands, AddTutorInformationFragment.this);
             rvHigh.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -159,7 +146,6 @@ public class AddTutorInformationFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @SuppressLint("NotifyDataSetChanged")
@@ -169,7 +155,6 @@ public class AddTutorInformationFragment extends Fragment {
                     Log.d("AppW Result: ", String.valueOf(result));
                     Log.d("AppW Exception: ", String.valueOf(throwable));
                 }));
-
             }
         });
 
@@ -204,8 +189,6 @@ public class AddTutorInformationFragment extends Fragment {
             }
         });
 
-
-
         ivAvatar.setOnClickListener(view -> TedImagePicker.with(requireContext())
                 .start(uri -> {
                     mViewModel.photoUri.setValue(uri);
@@ -214,9 +197,6 @@ public class AddTutorInformationFragment extends Fragment {
                             .into((ImageView) view);
                 }));
         btnDone.setOnClickListener(view -> createDocument());
-        btnDone.setOnClickListener(view -> Navigation.findNavController(view)
-                .navigate(R.id.action_addTutorInformationFragment_to_tutorMainFragment));
-
     }
 
     private void observe () {
@@ -256,8 +236,8 @@ public class AddTutorInformationFragment extends Fragment {
             AppwriteManager.INSTANCE.addTutorAccount(tutorAccount, AppwriteManager.INSTANCE.getContinuation((s, throwable) -> {
                 if (throwable != null) Log.e("add", String.valueOf(throwable));
                 Handler handler = new Handler(Looper.getMainLooper());
-                //handler.post(() ->
-                        //Navigation.findNavController(requireActivity(), R.id.globalNavContainer).navigate(R.id.action_addActiveInformationFragment_to_mainFragment));
+                handler.post(() ->
+                        Navigation.findNavController(requireActivity(), R.id.fragmentContainerView).navigate(R.id.action_addTutorInformationFragment_to_tutorMainFragment));
             }));
         };
         if (mViewModel.photoUri.getValue() == null) {
@@ -276,7 +256,6 @@ public class AddTutorInformationFragment extends Fragment {
         CompressorManager.INSTANCE.compress(requireContext(), file, CompressorManager.INSTANCE.getContinuation((compressedFile, throwable) -> {
             myDelayedObservable.onNext(compressedFile);
             myDelayedObservable.onComplete();
-
         }));
         return Observable.fromPublisher(myDelayedObservable);
     }
@@ -302,37 +281,15 @@ public class AddTutorInformationFragment extends Fragment {
     }
 
     private Observable<String> uploadImage(File file, String uuid) {
-        try {
-            BasicAWSCredentials creds = new BasicAWSCredentials("YCAJE13hLTon0cjh9HNs2w7Nw", "YCOBkvy7bLg-d413FJ2Ey-raB8LcJeg2xM-XcFWO");
-            AmazonS3Client s3Client = new AmazonS3Client(creds);
-            Callable<String> callable = () -> s3Client.getUrl("mentorium.userphotos", uuid).toString();
-            s3Client.setEndpoint("storage.yandexcloud.net");
-            TransferUtility trans = TransferUtility.builder().context(getActivity().getApplicationContext()).s3Client(s3Client).build();
-            TransferObserver transferObserver = trans.upload("mentorium.userphotos", uuid, file);
-            transferObserver.setTransferListener(new TransferListener() {
-                @Override
-                public void onStateChanged(int id, TransferState state) {
-                    try {
-
-                        callable.call();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-                    Log.d("io", "km");
-                }
-
-                @Override
-                public void onError(int id, Exception ex) {
-                    Log.e("error", ex.getMessage());
-
-                }
-            });
+        try{
+            AppwriteManager.INSTANCE.createFileTutorStorage(uuid, file, AppwriteManager.INSTANCE.getContinuation((result, throwable) -> {
+                Log.d("AppW Result: ", String.valueOf(result));
+                Log.d("AppW Exception: ", String.valueOf(throwable));
+            }));
+            Callable<String> callable = () -> "http://89.253.219.76/v1/storage/buckets/652510bc23dcaf951fff/files/"+uuid+"/view?project=649d4dbdcf623484dd45";
             return Observable.fromCallable(callable);
-        } catch (Exception e) {
+        }
+        catch (Exception e){
             e.printStackTrace();
             return null;
         }

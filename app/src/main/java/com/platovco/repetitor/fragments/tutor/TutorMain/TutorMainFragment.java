@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavHostController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -26,7 +27,6 @@ public class TutorMainFragment extends Fragment {
 
     private TutorMainViewModel mViewModel;
     private FragmentTutorMainBinding binding;
-
 
     public static TutorMainFragment newInstance() {
         return new TutorMainFragment();
@@ -54,7 +54,5 @@ public class TutorMainFragment extends Fragment {
         NavHostFragment host = (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.place_holder);
         NavController navController = host.getNavController();
         NavigationUI.setupWithNavController(mainBNV, navController);
-
-
     }
 }

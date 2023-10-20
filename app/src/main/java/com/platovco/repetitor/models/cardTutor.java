@@ -1,13 +1,13 @@
 package com.platovco.repetitor.models;
 
-public class card {
+public class cardTutor {
     private String photo;
     private String name;
     private String direction;
     private String education;
     private String experience;
 
-    public card(String photo, String name, String direction, String education, String experience) {
+    public cardTutor(String photo, String name, String direction, String education, String experience) {
         this.photo = photo;
         this.name = name;
         this.direction = direction;

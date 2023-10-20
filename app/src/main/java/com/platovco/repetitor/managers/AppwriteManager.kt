@@ -4,13 +4,18 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.platovco.repetitor.models.StudentAccount
 import com.platovco.repetitor.models.TutorAccount
+import com.platovco.repetitor.models.cardStudent
+import com.platovco.repetitor.models.cardTutor
 import io.appwrite.Query
 import io.appwrite.exceptions.AppwriteException
+import io.appwrite.models.InputFile
 import io.appwrite.models.User
 import io.appwrite.services.Account
 import io.appwrite.services.Databases
+import io.appwrite.services.Storage
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import java.io.File
 import java.util.ArrayList
 import java.util.function.BiConsumer
 import kotlin.coroutines.Continuation
@@ -28,8 +33,8 @@ object AppwriteManager {
                 collectionId = "64a8452b80905db4197c",
                 documentId = uuid,
                 data = mapOf(
-                    "Full_name" to tutorAccount.name,
-                    "Edication" to tutorAccount.high,
+                    "Name" to tutorAccount.name,
+                    "Education" to tutorAccount.education,
                     "Photo" to tutorAccount.photoUrl,
                     "Direction" to tutorAccount.direction,
                     "Experience" to tutorAccount.experience,
@@ -50,7 +55,7 @@ object AppwriteManager {
                 collectionId = "64a992739f88da356852",
                 documentId = uuid,
                 data = mapOf(
-                    "Full_name" to studentAccount.name,
+                    "Name" to studentAccount.name,
                     "Education" to studentAccount.high,
                     "Photo" to studentAccount.photoUrl,
                     "Direction" to studentAccount.direction,
@@ -63,7 +68,9 @@ object AppwriteManager {
     }
 
 
-    suspend fun getAllHighs(highsLD: MutableLiveData<java.util.ArrayList<String>>, textForSearch : String) {
+    suspend fun getAllHighs(
+        highsLD: MutableLiveData<ArrayList<String>>,
+        textForSearch : String) {
         val client = AppwriteClient.getClient()
         val databases = Databases(client)
         var queries = listOf(
@@ -93,7 +100,7 @@ object AppwriteManager {
     }
 
     suspend fun getAllDirections(
-        directionsLD: MutableLiveData<java.util.ArrayList<String>>,
+        directionsLD: MutableLiveData<ArrayList<String>>,
         textForSearch: String
     ) {
         val client = AppwriteClient.getClient()
@@ -154,4 +161,118 @@ object AppwriteManager {
             accountLD.postValue(null)
         }
     }
+
+    suspend fun getAllStudent(
+        studentsLD: MutableLiveData<ArrayList<cardStudent>>
+    ){
+        val client = AppwriteClient.getClient()
+        val databases = Databases(client)
+
+        try {
+            val students = ArrayList<cardStudent>()
+            var queries = listOf(
+                Query.limit(15),
+            )
+
+            val documents = databases.listDocuments(
+                databaseId = "64a845269d40bb3fd619",
+                collectionId = "64a992739f88da356852",
+                queries = queries,
+            )
+            documents.documents.forEach {
+                students.add(cardStudent(
+                    (it.data as MutableMap<*, *>?)?.get("Photo").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("Experience").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("Name").toString())
+                )
+            }
+
+            Log.e("AAA",  students[0].photo)
+            studentsLD.postValue(students)
+        } catch (e: AppwriteException) {
+            Log.e("Appwrite", "Error: " + e.message)
+        }
+    }
+
+    suspend fun getAllTutor(
+        tutorsLD: MutableLiveData<ArrayList<cardTutor>>
+    ){
+        val client = AppwriteClient.getClient()
+        val databases = Databases(client)
+
+        try {
+            val tutors = ArrayList<cardTutor>()
+            var queries = listOf(
+                Query.limit(15),
+            )
+
+            val documents = databases.listDocuments(
+                databaseId = "64a845269d40bb3fd619",
+                collectionId = "64a8452b80905db4197c",
+                queries = queries,
+            )
+            documents.documents.forEach {
+                tutors.add(cardTutor(
+                    (it.data as MutableMap<*, *>?)?.get("Photo").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("Name").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("Direction").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("Education").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("Experience").toString())
+                )
+            }
+            Log.e("AAA",  tutors[0].photo)
+            tutorsLD.postValue(tutors)
+        } catch (e: AppwriteException) {
+            Log.e("Appwrite", "Error: " + e.message)
+        }
+    }
+
+    suspend fun createFileTutorStorage(fileId: String, file: File){
+        val client = AppwriteClient.getClient()
+        val storage = Storage(client)
+
+        storage.createFile(
+            bucketId = "652510bc23dcaf951fff",
+            fileId = fileId,
+            file = InputFile.fromFile(file),
+        )
+    }
+
+    suspend fun createFileStudentStorage(fileId: String, file: File){
+        val client = AppwriteClient.getClient()
+        val storage = Storage(client)
+
+        storage.createFile(
+            bucketId = "65251e9c04cdd06bcec8",
+            fileId = fileId,
+            file = InputFile.fromFile(file),
+        )
+    }
+
+    suspend fun getTutor(tutorLD: MutableLiveData<TutorAccount>){
+        val client = AppwriteClient.getClient()
+        val databases = Databases(client)
+
+        val response = databases.getDocument(
+            databaseId = "64a845269d40bb3fd619",
+            collectionId = "64a8452b80905db4197c",
+            documentId = getAccount().id
+        )
+        val tutorAccount = TutorAccount(response.data as Map<*, *>)
+        tutorLD.postValue(tutorAccount)
+    }
+
+    suspend fun getStudent(studentLD: MutableLiveData<StudentAccount>){
+        val client = AppwriteClient.getClient()
+        val databases = Databases(client)
+
+        val response = databases.getDocument(
+            databaseId = "64a845269d40bb3fd619",
+            collectionId = "64a992739f88da356852",
+            documentId = getAccount().id
+        )
+        val studentAccount = StudentAccount(response.data as Map<*, *>)
+        studentLD.postValue(studentAccount)
+    }
+
 }

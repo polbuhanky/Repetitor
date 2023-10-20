@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/student_bnv_graph.xml">
+    app:startDestination="@id/student_search_graph"
+    android:id="@+id/student_bnv_graph">
+    <include app:graph="@navigation/student_search_graph" />
+    <include app:graph="@navigation/student_favourite_graph" />
+    <include app:graph="@navigation/student_chat_graph" />
+    <include app:graph="@navigation/student_profile_graph" />
 
 </navigation>

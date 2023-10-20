@@ -22,11 +22,11 @@ public class StudentAccount {
 
 
     public StudentAccount(@NotNull Map<?, ?> map) {
-        this.photoUrl = String.valueOf(map.get("photoUrl"));
-        this.name = String.valueOf(map.get("name"));
-        this.high = String.valueOf(map.get("high"));
-        this.direction = String.valueOf(map.get("direction"));
-        this.experience = String.valueOf(map.get("experience"));
+        this.photoUrl = String.valueOf(map.get("Photo"));
+        this.name = String.valueOf(map.get("Name"));
+        this.high = String.valueOf(map.get("Education"));
+        this.direction = String.valueOf(map.get("Direction"));
+        this.experience = String.valueOf(map.get("Experience"));
         this.uuid = String.valueOf(map.get("$id"));
     }
     public StudentAccount() {}

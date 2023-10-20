@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/active_map_graph"
+        android:id="@+id/student_search_graph"
         android:icon="@drawable/ic_search"
         android:title="Поиск"
         app:itemIconSize="30sp" />
     <item
-        android:id="@+id/active_favourite_graph"
+        android:id="@+id/student_favourite_graph"
         android:icon="@drawable/ic_favourite"
         app:itemIconSize="30sp"
         android:title="Избранные" />
     <item
-        android:id="@+id/active_chats_graph"
+        android:id="@+id/student_chat_graph"
         android:icon="@drawable/ic_chat"
         app:itemIconSize="30sp"
         android:title="Чаты" />
     <item
-        android:id="@+id/active_profile_graph"
+        android:id="@+id/student_profile_graph"
         android:icon="@drawable/ic_profile"
         app:itemIconSize="50sp"
         android:title="Профиль" />

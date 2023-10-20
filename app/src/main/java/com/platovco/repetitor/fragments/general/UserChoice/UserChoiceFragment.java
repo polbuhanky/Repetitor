@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import com.platovco.repetitor.R;
 import com.platovco.repetitor.databinding.FragmentUserChoiceBinding;
 import com.platovco.repetitor.fragments.general.AddTutorInformation.AddTutorInformationViewModel;
+import com.platovco.repetitor.managers.AppwriteManager;
 
 public class UserChoiceFragment extends Fragment {
 
@@ -44,7 +46,6 @@ public class UserChoiceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(UserChoiceViewModel.class);
-
         init();
     }
 
