@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_user_choice" >
         <action
             android:id="@+id/action_userChoiceFragment_to_addTutorInformationFragment"
-            app:destination="@id/addTutorInformationFragment" />
+            app:destination="@id/addTutorInformationFragment"
+            app:popUpTo="@id/userChoiceFragment" />
         <action
             android:id="@+id/action_userChoiceFragment_to_addStudentInformationFragment"
             app:destination="@id/addStudentInformationFragment" />

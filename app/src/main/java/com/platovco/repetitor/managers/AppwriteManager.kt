@@ -66,6 +66,11 @@ object AppwriteManager {
             Log.e("Appwrite", "Error: " + e.message)
         }
     }
+    suspend fun signOut() {
+        val client = AppwriteClient.getClient()
+        val account = Account(client)
+        account.deleteSessions()
+    }
 
 
     suspend fun getAllHighs(
