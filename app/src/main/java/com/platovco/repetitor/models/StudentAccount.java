@@ -7,30 +7,24 @@ import java.util.Map;
 public class StudentAccount {
     private String photoUrl;
     private String name;
-    private String high;
-    private String direction;
-    private String experience;
     private String uuid;
+    private Integer age;
 
-    public StudentAccount(String photoUrl, String name, String high, String direction, String experience) {
-        this.photoUrl = photoUrl;
-        this.name = name;
-        this.high = high;
-        this.direction = direction;
-        this.experience = experience;
-    }
 
 
     public StudentAccount(@NotNull Map<?, ?> map) {
-        this.photoUrl = String.valueOf(map.get("Photo"));
-        this.name = String.valueOf(map.get("Name"));
-        this.high = String.valueOf(map.get("Education"));
-        this.direction = String.valueOf(map.get("Direction"));
-        this.experience = String.valueOf(map.get("Experience"));
+        this.photoUrl = String.valueOf(map.get("photo"));
+        this.name = String.valueOf(map.get("name"));
+        this.age = Integer.valueOf(String.valueOf(map.get("age")));
         this.uuid = String.valueOf(map.get("$id"));
     }
     public StudentAccount() {}
 
+    public StudentAccount(String photoUrl, String name, Integer age) {
+        this.photoUrl = photoUrl;
+        this.name = name;
+        this.age = age;
+    }
 
     public String getPhotoUrl() {
         return photoUrl;
@@ -48,30 +42,6 @@ public class StudentAccount {
         this.name = name;
     }
 
-    public String getHigh() {
-        return high;
-    }
-
-    public void setHigh(String carModel) {
-        this.high = carModel;
-    }
-
-    public String getDirection() {
-        return direction;
-    }
-
-    public void setDirection(String carBrand) {
-        this.direction = carBrand;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setExperience(String carNumber) {
-        this.experience = carNumber;
-    }
-
     public String getUuid() {
         return uuid;
     }
@@ -80,4 +50,11 @@ public class StudentAccount {
         this.uuid = uuid;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 }

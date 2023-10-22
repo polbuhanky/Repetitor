@@ -73,9 +73,7 @@ public class TutorProfileFragment extends Fragment {
     private void init(){
         nameTV = binding.tvName;
         userPhotoIV = binding.ivAvatar;
-        educationTV = binding.tvEducation;
-        directionTV = binding.tvDirection;
-        experienceTV = binding.tvExperience;
+
         userPhotoIV.setOnClickListener(view -> TedImagePicker.with(requireContext())
                 .title("Выбрать")
                 .start(uri -> {

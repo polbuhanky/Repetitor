@@ -56,15 +56,18 @@ object AppwriteManager {
                 documentId = uuid,
                 data = mapOf(
                     "Name" to studentAccount.name,
-                    "Education" to studentAccount.high,
-                    "Photo" to studentAccount.photoUrl,
-                    "Direction" to studentAccount.direction,
-                    "Experience" to studentAccount.experience,
+                    "Education" to studentAccount.age,
+                    "Photo" to studentAccount.photoUrl
                 )
             )
         } catch (e: Exception) {
             Log.e("Appwrite", "Error: " + e.message)
         }
+    }
+    suspend fun signOut() {
+        val client = AppwriteClient.getClient()
+        val account = Account(client)
+        account.deleteSessions()
     }
 
 
@@ -170,7 +173,7 @@ object AppwriteManager {
 
         try {
             val students = ArrayList<cardStudent>()
-            var queries = listOf(
+            val queries = listOf(
                 Query.limit(15),
             )
 
@@ -181,9 +184,9 @@ object AppwriteManager {
             )
             documents.documents.forEach {
                 students.add(cardStudent(
-                    (it.data as MutableMap<*, *>?)?.get("Photo").toString(),
-                    (it.data as MutableMap<*, *>?)?.get("Experience").toString(),
-                    (it.data as MutableMap<*, *>?)?.get("Name").toString())
+                    (it.data as MutableMap<*, *>?)?.get("photo").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("experience").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("name").toString())
                 )
             }
 
@@ -202,7 +205,7 @@ object AppwriteManager {
 
         try {
             val tutors = ArrayList<cardTutor>()
-            var queries = listOf(
+            val queries = listOf(
                 Query.limit(15),
             )
 
@@ -213,11 +216,11 @@ object AppwriteManager {
             )
             documents.documents.forEach {
                 tutors.add(cardTutor(
-                    (it.data as MutableMap<*, *>?)?.get("Photo").toString(),
-                    (it.data as MutableMap<*, *>?)?.get("Name").toString(),
-                    (it.data as MutableMap<*, *>?)?.get("Direction").toString(),
-                    (it.data as MutableMap<*, *>?)?.get("Education").toString(),
-                    (it.data as MutableMap<*, *>?)?.get("Experience").toString())
+                    (it.data as MutableMap<*, *>?)?.get("photo").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("name").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("direction").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("education").toString(),
+                    (it.data as MutableMap<*, *>?)?.get("experience").toString())
                 )
             }
             Log.e("AAA",  tutors[0].photo)
@@ -273,6 +276,44 @@ object AppwriteManager {
         )
         val studentAccount = StudentAccount(response.data as Map<*, *>)
         studentLD.postValue(studentAccount)
+    }
+    suspend fun isUserWithInformation(isUserWithInformation: MutableLiveData<Int>) {
+        if (isStudentUser()) {
+            isUserWithInformation.postValue(1)
+        } else if (isTutorUser()) {
+            isUserWithInformation.postValue(2)
+        } else {
+            isUserWithInformation.postValue(3)
+        }
+    }
+    private suspend fun isStudentUser(): Boolean {
+        val client = AppwriteClient.getClient()
+        val databases = Databases(client)
+        return try {
+            databases.getDocument(
+                databaseId = "64a845269d40bb3fd619",
+                collectionId = "64a992739f88da356852",
+                documentId = getAccount().id,
+            )
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private suspend fun isTutorUser(): Boolean {
+        val client = AppwriteClient.getClient()
+        val databases = Databases(client)
+        return try {
+            databases.getDocument(
+                databaseId = "64a845269d40bb3fd619",
+                collectionId = "64a8452b80905db4197c",
+                documentId = getAccount().id,
+            )
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
 }

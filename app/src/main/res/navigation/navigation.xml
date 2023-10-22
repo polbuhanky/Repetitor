@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/userChoiceFragment">
+    app:startDestination="@id/loadingForIdentifyUserFragment">
 
     <fragment
         android:id="@+id/userChoiceFragment"
@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_user_choice" >
         <action
             android:id="@+id/action_userChoiceFragment_to_addTutorInformationFragment"
-            app:destination="@id/addTutorInformationFragment" />
+            app:destination="@id/addTutorInformationFragment"
+            app:popUpTo="@id/userChoiceFragment" />
         <action
             android:id="@+id/action_userChoiceFragment_to_addStudentInformationFragment"
             app:destination="@id/addStudentInformationFragment" />
@@ -45,4 +46,19 @@
         android:name="com.platovco.repetitor.fragments.tutor.TutorMain.TutorMainFragment"
         android:label="fragment_tutor_main"
         tools:layout="@layout/fragment_tutor_main" />
+    <fragment
+        android:id="@+id/loadingForIdentifyUserFragment"
+        tools:layout="@layout/fragment_loading_for_identify_user"
+        android:name="com.platovco.repetitor.fragments.general.LoadingForIdentifyUserFragment"
+        android:label="LoadingForIdentifyUserFragment" >
+        <action
+            android:id="@+id/action_loadingForIdentifyUserFragment_to_userChoiceFragment"
+            app:destination="@id/userChoiceFragment" />
+        <action
+            android:id="@+id/action_loadingForIdentifyUserFragment_to_tutorMainFragment"
+            app:destination="@id/tutorMainFragment" />
+        <action
+            android:id="@+id/action_loadingForIdentifyUserFragment_to_studentMainFragment"
+            app:destination="@id/studentMainFragment" />
+    </fragment>
 </navigation>

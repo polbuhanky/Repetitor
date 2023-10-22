@@ -195,6 +195,7 @@ public class AddTutorInformationFragment extends Fragment {
                     Glide.with(requireContext())
                             .load(uri)
                             .into((ImageView) view);
+                    binding.avatarTV.setText("Сменить фото");
                 }));
         btnDone.setOnClickListener(view -> createDocument());
     }
@@ -237,7 +238,7 @@ public class AddTutorInformationFragment extends Fragment {
                 if (throwable != null) Log.e("add", String.valueOf(throwable));
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(() ->
-                        Navigation.findNavController(requireActivity(), R.id.fragmentContainerView).navigate(R.id.action_addTutorInformationFragment_to_tutorMainFragment));
+                        Navigation.findNavController(requireActivity(), R.id.globalNavContainer).navigate(R.id.action_addTutorInformationFragment_to_tutorMainFragment));
             }));
         };
         if (mViewModel.photoUri.getValue() == null) {

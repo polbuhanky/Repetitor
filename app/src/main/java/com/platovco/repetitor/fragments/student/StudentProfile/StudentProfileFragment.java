@@ -140,18 +140,11 @@ public class StudentProfileFragment extends Fragment {
         if (studentAccount.getName() != null && !studentAccount.getName().equals("null")) {
             nameTV.setText(studentAccount.getName());
         }
-        if (studentAccount.getHigh() != null && !studentAccount.getHigh().equals("null")) {
-            educationTV.setText(studentAccount.getHigh());
-        }
-        if (studentAccount.getDirection() != null && !studentAccount.getDirection().equals("null")) {
-            directionTV.setText(studentAccount.getDirection());
-        }
+
         if (studentAccount.getPhotoUrl() != null && !studentAccount.getPhotoUrl().equals("null")) {
             Glide.with(requireContext()).load(studentAccount.getPhotoUrl()).into(userPhotoIV);
         }
-        if (studentAccount.getExperience() != null && !studentAccount.getExperience().equals("null")) {
-            experienceTV.setText(studentAccount.getExperience());
-        }
+
         if (studentAccount.getPhotoUrl() != null && !studentAccount.getPhotoUrl().equals("null")) {
             Glide.with(requireContext())
                     .load(studentAccount.getPhotoUrl())

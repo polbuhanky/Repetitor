@@ -1,23 +1,12 @@
 package com.platovco.repetitor.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.Navigation;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import com.platovco.repetitor.R;
-import com.platovco.repetitor.managers.AppwriteClient;
-
-import org.jetbrains.annotations.NotNull;
-
-import io.appwrite.Client;
-import io.appwrite.services.Account;
-import kotlin.Result;
-import kotlin.coroutines.Continuation;
-import kotlin.coroutines.CoroutineContext;
-import kotlin.coroutines.EmptyCoroutineContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,5 +47,10 @@ public class MainActivity extends AppCompatActivity {
         //        }});
         //    finish();
         //});
+    }
+
+    @Override
+    public void onBackPressed() {
+        Navigation.findNavController(this, R.id.globalNavContainer).navigateUp();
     }
 }

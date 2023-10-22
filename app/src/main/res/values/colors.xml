@@ -9,12 +9,13 @@
     <color name="white">#FFFFFF</color>
     <color name="light_text">#E4CADFDF</color>
     <color name="dark_text">#141630</color>
+    <color name="transparent">#00000000</color>
     <color name="blue">#2FDDDD</color>
     <color name="background_color">#1E1E1F</color>
     <color name="light_background_color">#000000</color>
     <color name="second_primary_color">#EEEFF0</color>
-    <color name="white_orange">#f9f4ee</color>
+    <color name="white_text">#E6E6E6</color>
     <color name="colorAccent">#2FDDDD</color>
-
+    <color name="orange">#DD662F</color>
 
 </resources>

@@ -33,15 +33,15 @@ public class ChooseHighAdapter extends RecyclerView.Adapter<ChooseHighAdapter.Vi
     @NonNull
     @Override
     public ChooseHighAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_high, parent, false);
+        View view = inflater.inflate(R.layout.item_tip, parent, false);
         return new ViewHolder(view, context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String brand = brands.get(position);
-        holder.name.setText(brand);
-        holder.cardView.setOnClickListener(view -> {
+        holder.tipTV.setText(brand);
+        holder.tipTV.setOnClickListener(view -> {
             Bundle result = new Bundle();
             result.putString("high", brand);
             fragment.getParentFragmentManager().setFragmentResult("brandKey", result);
@@ -54,13 +54,11 @@ public class ChooseHighAdapter extends RecyclerView.Adapter<ChooseHighAdapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView name;
-        final CardView cardView;
+        final TextView tipTV;
 
         public ViewHolder(@NonNull View itemView, final Context context) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.name);
-            cardView = (CardView) itemView.findViewById(R.id.card);
+            tipTV = (TextView) itemView.findViewById(R.id.tipTV);
         }
     }
 }

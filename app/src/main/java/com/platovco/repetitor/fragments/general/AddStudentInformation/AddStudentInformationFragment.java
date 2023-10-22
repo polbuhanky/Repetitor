@@ -11,13 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,29 +23,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.bumptech.glide.Glide;
 import com.platovco.repetitor.R;
-import com.platovco.repetitor.adapters.ChooseDirectionAdapter;
-import com.platovco.repetitor.adapters.ChooseHighAdapter;
 import com.platovco.repetitor.databinding.FragmentAddStudentInformationBinding;
-import com.platovco.repetitor.databinding.FragmentAddTutorInformationBinding;
-import com.platovco.repetitor.fragments.general.AddTutorInformation.AddTutorInformationFragment;
-import com.platovco.repetitor.fragments.general.AddTutorInformation.AddTutorInformationViewModel;
 import com.platovco.repetitor.managers.AppwriteManager;
 import com.platovco.repetitor.managers.CompressorManager;
 import com.platovco.repetitor.models.StudentAccount;
-import com.platovco.repetitor.models.TutorAccount;
 import com.platovco.repetitor.utils.CustomTextWatcher;
 import com.platovco.repetitor.utils.PhotoUtil;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
@@ -67,15 +50,8 @@ public class AddStudentInformationFragment extends Fragment {
     private FragmentAddStudentInformationBinding binding;
     private ImageView ivAvatar;
     private EditText etName;
-    private EditText etExperience;
     private Button btnDone;
     private EditText etHigh;
-    private EditText etDirection;
-    ArrayList<String> brands = new ArrayList<>();
-    ArrayList<String> allBrands = new ArrayList<>();
-    ArrayList<String> allDirections = new ArrayList<>();
-    ArrayList<String> directions = new ArrayList<>();
-
     private AddStudentInformationViewModel mViewModel;
 
     public static AddStudentInformationFragment newInstance() {
@@ -101,17 +77,15 @@ public class AddStudentInformationFragment extends Fragment {
     private void init(){
         ivAvatar = binding.piAvatar;
         etName = binding.etName;
-        etExperience = binding.etExperience;
         btnDone = binding.btnDone;
-        etHigh = binding.etHigh;
-        etDirection = binding.etDirection;
+        etHigh = binding.etAge;
     }
 
     private void observe() {
-        mViewModel.directionLD.observe(getViewLifecycleOwner(), model ->
-                etDirection.setText(model));
-        mViewModel.highLD.observe(getViewLifecycleOwner(), brand ->
-                etHigh.setText(brand));
+        mViewModel.ageLD.observe(getViewLifecycleOwner(), model ->
+                binding.etAge.setText(model));
+        mViewModel.nameLD.observe(getViewLifecycleOwner(), brand ->
+                binding.etName.setText(brand));
         mViewModel.photoUri.observe(getViewLifecycleOwner(), uri ->
                 Glide.with(requireContext())
                         .load(uri)
@@ -119,40 +93,32 @@ public class AddStudentInformationFragment extends Fragment {
     }
 
     private void initListener() {
-        etName.addTextChangedListener( new CustomTextWatcher(mViewModel.nameLD));
-        etExperience.addTextChangedListener( new CustomTextWatcher(mViewModel.experienceLD));
-        etHigh.addTextChangedListener( new CustomTextWatcher(mViewModel.highLD));
-        etDirection.addTextChangedListener( new CustomTextWatcher(mViewModel.directionLD));
-
+        binding.etName.addTextChangedListener( new CustomTextWatcher(mViewModel.nameLD));
+        binding.etAge.addTextChangedListener( new CustomTextWatcher(mViewModel.ageLD));
         ivAvatar.setOnClickListener(view -> TedImagePicker.with(requireContext())
                 .start(uri -> {
                     mViewModel.photoUri.setValue(uri);
                     Glide.with(requireContext())
                             .load(uri)
                             .into((ImageView) view);
+                    binding.avatarTV.setText("Сменить фото");
                 }));
         btnDone.setOnClickListener(view -> createDocument());
     }
 
     private void createDocument(){
         if (mViewModel.nameLD.getValue() == null) {
-            Toast.makeText(getContext(), "Введите ваше ФИО", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Введите Ваше имя", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if (mViewModel.nameLD.getValue() == null) {
+            Toast.makeText(getContext(), "Введите Ваш возраст", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (mViewModel.photoUri.getValue() == null) {
             Toast.makeText(getContext(), "Прикрепите ваше фото", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (mViewModel.highLD.getValue() == null) {
-            Toast.makeText(getContext(), "Введите ВУЗ", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (mViewModel.directionLD.getValue() == null) {
-            Toast.makeText(getContext(), "Введите направление", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (mViewModel.experienceLD.getValue() == null) {
-            Toast.makeText(getContext(), "Введите стаж", Toast.LENGTH_SHORT).show();
             return;
         }
         @SuppressLint("NotifyDataSetChanged") AddStudentInformationFragment.PhotosDownloadedCallback photosDownloadedCallback = () -> {
@@ -161,7 +127,7 @@ public class AddStudentInformationFragment extends Fragment {
                 if (throwable != null) Log.e("add", String.valueOf(throwable));
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(() ->
-                    Navigation.findNavController(requireActivity(), R.id.fragmentContainerView).navigate(R.id.action_addStudentInformationFragment_to_studentMainFragment));
+                    Navigation.findNavController(requireActivity(), R.id.globalNavContainer).navigate(R.id.action_addStudentInformationFragment_to_studentMainFragment));
             }));
         };
         if (mViewModel.photoUri.getValue() == null) {
@@ -223,8 +189,4 @@ public class AddStudentInformationFragment extends Fragment {
     private interface PhotosDownloadedCallback {
         void allPhotosDownloaded();
     }
-
-
-
-
 }
